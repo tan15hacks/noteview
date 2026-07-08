@@ -14,7 +14,7 @@ import {
   TrendingUp,
   X,
 } from "lucide-react";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -103,9 +103,34 @@ function categoryCopy(category: string) {
   return copy[category as keyof typeof copy];
 }
 
+function updateCarouselIndex(element: HTMLDivElement | null, setIndex: (index: number) => void) {
+  if (!element) return;
+  const cards = Array.from(element.querySelectorAll<HTMLElement>("article"));
+  if (!cards.length) return;
+
+  const center = element.scrollLeft + element.clientWidth / 2;
+  let activeIndex = 0;
+  let smallestDistance = Number.POSITIVE_INFINITY;
+
+  cards.forEach((card, index) => {
+    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+    const distance = Math.abs(cardCenter - center);
+    if (distance < smallestDistance) {
+      smallestDistance = distance;
+      activeIndex = index;
+    }
+  });
+
+  setIndex(activeIndex);
+}
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [toast, setToast] = useState("");
+  const [articleIndex, setArticleIndex] = useState(0);
+  const [categoryIndex, setCategoryIndex] = useState(0);
+  const articleRef = useRef<HTMLDivElement | null>(null);
+  const categoryRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
@@ -287,9 +312,9 @@ export default function Home() {
             <p className="max-w-md text-base font-medium leading-7 text-[#675a4d]">Fresh articles, practical guides, and simple ideas for modern digital work and everyday clarity.</p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div ref={articleRef} onScroll={() => updateCarouselIndex(articleRef.current, setArticleIndex)} className="[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3">
             {articles.map((post) => (
-              <article key={post.title} data-reveal className="article-card flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#d7c8b2] bg-[#fffaf0] shadow-sm">
+              <article key={post.title} data-reveal className="article-card flex h-full min-w-[86vw] snap-center flex-col overflow-hidden rounded-[2rem] border border-[#d7c8b2] bg-[#fffaf0] shadow-sm md:min-w-0">
                 <div className="relative h-56 shrink-0 overflow-hidden">
                   <img src={post.image} alt={`${post.tag} article preview for ${post.title}`} className="h-full w-full object-cover" />
                 </div>
@@ -301,6 +326,10 @@ export default function Home() {
                 </div>
               </article>
             ))}
+          </div>
+
+          <div className="mt-4 flex justify-center gap-2 md:hidden" aria-hidden="true">
+            {articles.map((post, index) => <span key={post.title} className={`h-2 rounded-full transition-all ${articleIndex === index ? "w-7 bg-[#b45309]" : "w-2 bg-[#b45309]/30"}`} />)}
           </div>
         </div>
       </section>
@@ -315,9 +344,9 @@ export default function Home() {
             <p className="max-w-md text-base font-medium leading-7 text-[#675a4d]">Choose the kind of ideas you want to read, from better systems to creative direction.</p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div ref={categoryRef} onScroll={() => updateCarouselIndex(categoryRef.current, setCategoryIndex)} className="[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-5">
             {categories.map((category, index) => (
-              <article key={category} className="topic-card flex min-h-[230px] flex-col rounded-[1.75rem] border border-[#d7c8b2] bg-[#f3efe6] p-6">
+              <article key={category} className="topic-card flex min-h-[230px] min-w-[82vw] snap-center flex-col rounded-[1.75rem] border border-[#d7c8b2] bg-[#f3efe6] p-6 md:min-w-0">
                 <div className="mb-8 flex items-center justify-between">
                   <span className="font-serif text-4xl font-semibold text-[#b45309]">0{index + 1}</span>
                   <PenLine size={20} className="text-[#7a6a58]" />
@@ -326,6 +355,10 @@ export default function Home() {
                 <p className="mt-auto pt-5 text-sm font-medium leading-6 text-[#675a4d]">{categoryCopy(category)}</p>
               </article>
             ))}
+          </div>
+
+          <div className="mt-4 flex justify-center gap-2 md:hidden" aria-hidden="true">
+            {categories.map((category, index) => <span key={category} className={`h-2 rounded-full transition-all ${categoryIndex === index ? "w-7 bg-[#b45309]" : "w-2 bg-[#b45309]/30"}`} />)}
           </div>
         </div>
       </section>
