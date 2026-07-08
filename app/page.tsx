@@ -26,17 +26,6 @@ const navItems = [
 
 const categories = ["Productivity", "Technology", "Design", "Lifestyle", "Writing"];
 
-const leadStory = {
-  title: "How to Build a Simple System for Better Focus",
-  excerpt:
-    "A practical guide to organizing your tasks, reducing distractions, and creating a workflow that actually supports your day.",
-  author: "Mara Ellis",
-  date: "July 8, 2026",
-  readTime: "8 min read",
-  image:
-    "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1400&q=90",
-};
-
 const topStories = [
   { tag: "Design", title: "Why Simple Design Still Feels More Premium", readTime: "5 min read" },
   { tag: "Technology", title: "The Best Tools for Organizing Your Ideas", readTime: "7 min read" },
@@ -49,48 +38,42 @@ const articles = [
     title: "How to Make Your Digital Workspace Feel Less Messy",
     excerpt: "A calm reset for tabs, tools, files, and daily systems without starting over.",
     readTime: "6 min read",
-    image:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=90",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=90",
   },
   {
     tag: "Lifestyle",
     title: "Small Habits That Make Creative Work Easier",
     excerpt: "Simple routines for reducing friction and building a more consistent creative rhythm.",
     readTime: "4 min read",
-    image:
-      "https://images.unsplash.com/photo-1495364141860-b0d03eccd065?auto=format&fit=crop&w=900&q=90",
+    image: "https://images.unsplash.com/photo-1495364141860-b0d03eccd065?auto=format&fit=crop&w=900&q=90",
   },
   {
     tag: "Technology",
     title: "A Cleaner Way to Save Ideas Before They Disappear",
     excerpt: "How to capture thoughts quickly and return to them when they are actually useful.",
     readTime: "7 min read",
-    image:
-      "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=90",
+    image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=90",
   },
   {
     tag: "Design",
     title: "What Editorial Layouts Teach Us About Better Screens",
     excerpt: "Spacing, hierarchy, rhythm, and restraint from magazines applied to modern web design.",
     readTime: "5 min read",
-    image:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=90",
+    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=90",
   },
   {
     tag: "Writing",
     title: "How to Turn Loose Notes Into Useful Posts",
     excerpt: "A lightweight method for shaping scattered ideas into readable, focused articles.",
     readTime: "6 min read",
-    image:
-      "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=90",
+    image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=90",
   },
   {
     tag: "Productivity",
     title: "How to Plan a Week Without Overplanning",
     excerpt: "A practical weekly planning approach that leaves enough room for real life.",
     readTime: "4 min read",
-    image:
-      "https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=900&q=90",
+    image: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=900&q=90",
   },
 ];
 
@@ -245,23 +228,23 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(330px,0.75fr)]">
-            <article data-reveal className="story-cover overflow-hidden rounded-[2.2rem] border border-[#d7c8b2] bg-[#fffaf0] shadow-2xl shadow-black/[0.06]">
-              <div className="relative min-h-[430px] overflow-hidden lg:min-h-[560px]">
-                <img src={leadStory.image} alt="Desk workspace for featured productivity article" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(330px,0.75fr)] lg:items-stretch">
+            <article data-reveal className="story-cover flex h-full min-h-[520px] overflow-hidden rounded-[2.2rem] border border-[#d7c8b2] bg-[#fffaf0] shadow-2xl shadow-black/[0.06] lg:min-h-[650px]">
+              <div className="relative min-h-[520px] flex-1 overflow-hidden lg:min-h-[650px]">
+                <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1400&q=90" alt="Desk workspace for featured productivity article" className="absolute inset-0 h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#211a14]/88 via-[#211a14]/28 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-[#fffaf0] sm:p-9 lg:p-12">
                   <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#fffaf0]/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] backdrop-blur"><Sparkles size={14} /> Featured Post</div>
-                  <h2 className="max-w-3xl break-words font-serif text-[clamp(2.5rem,5.1vw,4.6rem)] font-semibold leading-[0.95] tracking-[-0.06em]">{leadStory.title}</h2>
-                  <p className="mt-5 max-w-2xl text-base font-medium leading-7 text-[#efe6d5]">{leadStory.excerpt}</p>
+                  <h2 className="max-w-3xl break-words font-serif text-[clamp(2.5rem,5.1vw,4.6rem)] font-semibold leading-[0.95] tracking-[-0.06em]">How to Build a Simple System for Better Focus</h2>
+                  <p className="mt-5 max-w-2xl text-base font-medium leading-7 text-[#efe6d5]">A practical guide to organizing your tasks, reducing distractions, and creating a workflow that actually supports your day.</p>
                   <div className="mt-7 flex flex-wrap items-center gap-4 text-sm font-semibold text-[#efe6d5]">
-                    <span>{leadStory.author}</span><span>•</span><span>{leadStory.date}</span><span>•</span><span>{leadStory.readTime}</span>
+                    <span>Mara Ellis</span><span>•</span><span>July 8, 2026</span><span>•</span><span>8 min read</span>
                   </div>
                 </div>
               </div>
             </article>
 
-            <aside data-reveal className="rounded-[2.2rem] border border-[#d7c8b2] bg-[#fffaf0] p-6 shadow-xl shadow-black/[0.04] lg:p-8">
+            <aside data-reveal className="flex h-full min-h-[520px] flex-col rounded-[2.2rem] border border-[#d7c8b2] bg-[#fffaf0] p-6 shadow-xl shadow-black/[0.04] lg:min-h-[650px] lg:p-8">
               <div className="mb-7 flex items-center justify-between border-b border-[#d7c8b2] pb-5">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#b45309]">Editor Desk</p>
@@ -274,13 +257,13 @@ export default function Home() {
                 {topStories.map((story, index) => (
                   <article key={story.title} className="story-link group border-b border-[#e5d9c8] pb-5 last:border-b-0 last:pb-0">
                     <div className="mb-3 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-[#b45309]"><span>0{index + 1}</span><span>{story.tag}</span></div>
-                    <h3 className="break-words font-serif text-[clamp(1.8rem,2.3vw,2.35rem)] font-semibold leading-tight tracking-[-0.04em] group-hover:text-[#b45309]">{story.title}</h3>
+                    <h3 className="break-words font-serif text-[clamp(1.75rem,2vw,2.15rem)] font-semibold leading-tight tracking-[-0.04em] group-hover:text-[#b45309]">{story.title}</h3>
                     <div className="mt-3 flex items-center gap-2 text-sm font-semibold text-[#7a6a58]"><Clock3 size={15} /> {story.readTime}</div>
                   </article>
                 ))}
               </div>
 
-              <a href="#articles" className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#211a14] px-5 py-4 text-sm font-bold text-[#fffaf0] hover:-translate-y-1 hover:bg-[#b45309]">
+              <a href="#articles" style={{ color: "#fffaf0" }} className="mt-auto inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#211a14] px-5 py-4 text-sm font-bold !text-[#fffaf0] hover:-translate-y-1 hover:bg-[#b45309]">
                 Start Reading <ArrowRight size={16} />
               </a>
             </aside>
@@ -398,7 +381,7 @@ export default function Home() {
             <p className="text-lg font-medium leading-8 text-[#675a4d]">Join the NoteView newsletter for weekly articles, useful guides, and curated ideas from the blog.</p>
             <form onSubmit={handleSubscribe} className="mt-10 flex flex-col gap-4 sm:flex-row">
               <input name="email" type="email" className="min-h-14 flex-1 rounded-full border border-[#d7c8b2] bg-[#f3efe6] px-5 text-[#211a14] outline-none placeholder:text-[#8a7b68] focus:border-[#b45309]" placeholder="Enter your email" />
-              <button className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#211a14] px-6 text-sm font-bold text-[#fffaf0] hover:-translate-y-1 hover:bg-[#b45309]">Subscribe <Send size={16} /></button>
+              <button className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#211a14] px-6 text-sm font-bold !text-[#fffaf0] hover:-translate-y-1 hover:bg-[#b45309]">Subscribe <Send size={16} /></button>
             </form>
             <div className="mt-8 grid gap-3 text-sm font-semibold text-[#675a4d] sm:grid-cols-3">
               {["Weekly articles", "Curated guides", "No noise"].map((item) => <div key={item} className="flex items-center gap-2"><Check size={16} className="text-[#b45309]" /> {item}</div>)}
