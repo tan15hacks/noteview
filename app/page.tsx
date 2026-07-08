@@ -27,9 +27,9 @@ const navItems = [
 const categories = ["Productivity", "Technology", "Design", "Lifestyle", "Writing"];
 
 const topStories = [
-  { tag: "Design", title: "Why Simple Design Still Feels More Premium", readTime: "5 min read" },
-  { tag: "Technology", title: "The Best Tools for Organizing Your Ideas", readTime: "7 min read" },
-  { tag: "Writing", title: "The Quiet Power of Writing Things Down", readTime: "6 min read" },
+  { tag: "Design", title: "Why Simple Design Still Feels More Premium", author: "Lena Vale", date: "July 7, 2026", readTime: "5 min read" },
+  { tag: "Technology", title: "The Best Tools for Organizing Your Ideas", author: "Noah Reyes", date: "July 6, 2026", readTime: "7 min read" },
+  { tag: "Writing", title: "The Quiet Power of Writing Things Down", author: "NoteView Editorial", date: "July 5, 2026", readTime: "6 min read" },
 ];
 
 const articles = [
@@ -37,43 +37,61 @@ const articles = [
     tag: "Productivity",
     title: "How to Make Your Digital Workspace Feel Less Messy",
     excerpt: "A calm reset for tabs, tools, files, and daily systems without starting over.",
+    author: "Mara Santos",
+    date: "July 8, 2026",
     readTime: "6 min read",
     image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=90",
+    alt: "Digital workspace setup for productivity blog post",
   },
   {
     tag: "Lifestyle",
     title: "Small Habits That Make Creative Work Easier",
     excerpt: "Simple routines for reducing friction and building a more consistent creative rhythm.",
+    author: "NoteView Editorial",
+    date: "July 8, 2026",
     readTime: "4 min read",
     image: "https://images.unsplash.com/photo-1495364141860-b0d03eccd065?auto=format&fit=crop&w=900&q=90",
+    alt: "Clock image for lifestyle and creative habits article",
   },
   {
     tag: "Technology",
     title: "A Cleaner Way to Save Ideas Before They Disappear",
     excerpt: "How to capture thoughts quickly and return to them when they are actually useful.",
+    author: "Noah Reyes",
+    date: "July 7, 2026",
     readTime: "7 min read",
     image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=90",
+    alt: "Pen writing on paper for writing tips article",
   },
   {
     tag: "Design",
     title: "What Editorial Layouts Teach Us About Better Screens",
     excerpt: "Spacing, hierarchy, rhythm, and restraint from magazines applied to modern web design.",
+    author: "Lena Vale",
+    date: "July 6, 2026",
     readTime: "5 min read",
     image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=90",
+    alt: "Abstract modern design image for editorial layout article",
   },
   {
     tag: "Writing",
     title: "How to Turn Loose Notes Into Useful Posts",
     excerpt: "A lightweight method for shaping scattered ideas into readable, focused articles.",
+    author: "NoteView Editorial",
+    date: "July 5, 2026",
     readTime: "6 min read",
     image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=90",
+    alt: "Pen writing on paper for writing tips article",
   },
   {
     tag: "Productivity",
     title: "How to Plan a Week Without Overplanning",
     excerpt: "A practical weekly planning approach that leaves enough room for real life.",
+    author: "Mara Santos",
+    date: "July 4, 2026",
     readTime: "4 min read",
     image: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=900&q=90",
+    alt: "Calendar and notes for weekly planning blog post",
   },
 ];
 
@@ -86,9 +104,9 @@ const popularPosts = [
 ];
 
 const notes = [
-  "A cleaner reading experience starts with better spacing.",
-  "Useful posts do not need to be loud to be memorable.",
-  "The best digital systems are the ones you actually return to.",
+  "A cleaner reading experience starts with better spacing, clearer hierarchy, and fewer distractions.",
+  "Useful posts do not need to be loud to be memorable; they need to be easy to return to.",
+  "The best digital systems are the ones that help ideas stay visible when you need them again.",
 ];
 
 function categoryCopy(category: string) {
@@ -129,6 +147,7 @@ export default function Home() {
   const [toast, setToast] = useState("");
   const [articleIndex, setArticleIndex] = useState(0);
   const [categoryIndex, setCategoryIndex] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
   const articleRef = useRef<HTMLDivElement | null>(null);
   const categoryRef = useRef<HTMLDivElement | null>(null);
 
@@ -160,6 +179,18 @@ export default function Home() {
     const timeout = window.setTimeout(() => setToast(""), 4200);
     return () => window.clearTimeout(timeout);
   }, [toast]);
+
+  function handleSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const cleanSearch = searchTerm.trim();
+
+    if (!cleanSearch) {
+      setToast("Type a topic, category, or idea to search.");
+      return;
+    }
+
+    setToast(`Searching NoteView for “${cleanSearch}”.`);
+  }
 
   function handleSubscribe(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -215,9 +246,9 @@ export default function Home() {
           </div>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <button className="grid h-11 w-11 place-items-center rounded-full border border-[#d7c8b2] bg-[#fffaf0] text-[#675a4d] hover:-translate-y-0.5 hover:text-[#211a14]" aria-label="Search articles">
+            <a href="#search" className="grid h-11 w-11 place-items-center rounded-full border border-[#d7c8b2] bg-[#fffaf0] text-[#675a4d] hover:-translate-y-0.5 hover:text-[#211a14]" aria-label="Search articles">
               <Search size={18} />
-            </button>
+            </a>
             <a href="#subscribe" className="header-cta inline-flex min-h-11 items-center justify-center rounded-full border border-[#211a14]/20 bg-[#fffaf0] px-6 text-sm font-extrabold text-[#211a14] shadow-xl shadow-black/10 hover:-translate-y-0.5 hover:bg-white">
               Subscribe
             </a>
@@ -236,6 +267,9 @@ export default function Home() {
                   {item.label}
                 </a>
               ))}
+              <a onClick={() => setMenuOpen(false)} href="#search" className="rounded-2xl border border-[#ded1bd] bg-[#fffaf0] px-4 py-3 text-sm font-bold text-[#675a4d]">
+                Search
+              </a>
             </div>
           </div>
         )}
@@ -244,26 +278,26 @@ export default function Home() {
       <section id="home" className="px-5 pb-16 pt-32 lg:px-8 lg:pb-24 lg:pt-44">
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-10 border-b border-[#211a14] pb-8 text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-[#b45309]">Modern Blog & Digital Journal</p>
+            <p className="text-sm font-bold uppercase tracking-[0.3em] text-[#b45309]">A Digital Journal for Better Ideas</p>
             <h1 className="mx-auto mt-5 max-w-6xl break-words font-serif text-[clamp(3.4rem,9.4vw,7.6rem)] font-semibold leading-[0.9] tracking-[-0.07em]">
               Ideas, stories, and notes worth reading.
             </h1>
             <p className="mx-auto mt-7 max-w-2xl text-lg font-medium leading-8 text-[#675a4d]">
-              NoteView brings together thoughtful blog posts, practical guides, and fresh perspectives for readers who want useful ideas without the noise.
+              NoteView brings together thoughtful blog posts, practical guides, and fresh perspectives for readers who want clearer ideas without the noise.
             </p>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(330px,0.75fr)] lg:items-stretch">
             <article data-reveal className="story-cover flex h-full min-h-[520px] overflow-hidden rounded-[2.2rem] border border-[#d7c8b2] bg-[#fffaf0] shadow-2xl shadow-black/[0.06] lg:min-h-[650px]">
               <div className="relative min-h-[520px] flex-1 overflow-hidden lg:min-h-[650px]">
-                <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1400&q=90" alt="Desk workspace for featured productivity article" className="absolute inset-0 h-full w-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1400&q=90" alt="Coffee cup beside notebook for featured productivity article" className="absolute inset-0 h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#211a14]/88 via-[#211a14]/28 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-[#fffaf0] sm:p-9 lg:p-12">
-                  <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#fffaf0]/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] backdrop-blur"><Sparkles size={14} /> Featured Post</div>
+                  <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#fffaf0]/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] backdrop-blur"><Sparkles size={14} /> Featured Blog Post</div>
                   <h2 className="max-w-3xl break-words font-serif text-[clamp(2.5rem,5.1vw,4.6rem)] font-semibold leading-[0.95] tracking-[-0.06em]">How to Build a Simple System for Better Focus</h2>
                   <p className="mt-5 max-w-2xl text-base font-medium leading-7 text-[#efe6d5]">A practical guide to organizing your tasks, reducing distractions, and creating a workflow that actually supports your day.</p>
                   <div className="mt-7 flex flex-wrap items-center gap-4 text-sm font-semibold text-[#efe6d5]">
-                    <span>Mara Ellis</span><span>•</span><span>July 8, 2026</span><span>•</span><span>8 min read</span>
+                    <span>By Mara Santos</span><span>•</span><span>July 8, 2026</span><span>•</span><span>8 min read</span>
                   </div>
                 </div>
               </div>
@@ -272,8 +306,8 @@ export default function Home() {
             <aside data-reveal className="flex h-full min-h-[520px] flex-col rounded-[2.2rem] border border-[#d7c8b2] bg-[#fffaf0] p-6 shadow-xl shadow-black/[0.04] lg:min-h-[650px] lg:p-8">
               <div className="mb-7 flex items-center justify-between border-b border-[#d7c8b2] pb-5">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#b45309]">Editor Desk</p>
-                  <h2 className="mt-2 font-serif text-3xl font-semibold tracking-[-0.04em]">Top Stories</h2>
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#b45309]">Top Stories</p>
+                  <h2 className="mt-2 font-serif text-3xl font-semibold tracking-[-0.04em]">Editor Desk</h2>
                 </div>
                 <TrendingUp className="text-[#b45309]" />
               </div>
@@ -283,7 +317,7 @@ export default function Home() {
                   <article key={story.title} className="story-link group border-b border-[#e5d9c8] pb-5 last:border-b-0 last:pb-0">
                     <div className="mb-3 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-[#b45309]"><span>0{index + 1}</span><span>{story.tag}</span></div>
                     <h3 className="break-words font-serif text-[clamp(1.75rem,2vw,2.15rem)] font-semibold leading-tight tracking-[-0.04em] group-hover:text-[#b45309]">{story.title}</h3>
-                    <div className="mt-3 flex items-center gap-2 text-sm font-semibold text-[#7a6a58]"><Clock3 size={15} /> {story.readTime}</div>
+                    <div className="mt-3 flex flex-wrap items-center gap-2 text-sm font-semibold text-[#7a6a58]"><span>{story.author}</span><span>•</span><span>{story.date}</span><span>•</span><Clock3 size={15} /> {story.readTime}</div>
                   </article>
                 ))}
               </div>
@@ -302,6 +336,35 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="search" data-reveal className="px-5 py-14 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-6 rounded-[2rem] border border-[#d7c8b2] bg-[#fffaf0] p-6 shadow-xl shadow-black/[0.04] lg:grid-cols-[0.72fr_1.28fr] lg:p-8">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.3em] text-[#b45309]">Search NoteView</p>
+            <h2 className="mt-3 font-serif text-4xl font-semibold tracking-[-0.05em]">Find articles faster.</h2>
+          </div>
+          <div>
+            <form onSubmit={handleSearch} className="flex flex-col gap-3 sm:flex-row">
+              <label className="relative flex-1">
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[#8a7b68]" size={19} />
+                <input
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                  className="min-h-14 w-full rounded-full border border-[#d7c8b2] bg-[#f3efe6] pl-12 pr-5 text-sm font-semibold text-[#211a14] outline-none placeholder:text-[#8a7b68] focus:border-[#b45309]"
+                  placeholder="Search articles, guides, and ideas..."
+                />
+              </label>
+              <button className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#211a14] px-6 text-sm font-bold !text-[#fffaf0] hover:-translate-y-1 hover:bg-[#b45309]">Search <ArrowRight size={16} /></button>
+            </form>
+            <div className="mt-4 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[#7a6a58]">
+              <span className="rounded-full border border-[#d7c8b2] px-3 py-2">Productivity</span>
+              <span className="rounded-full border border-[#d7c8b2] px-3 py-2">AI tools</span>
+              <span className="rounded-full border border-[#d7c8b2] px-3 py-2">Writing tips</span>
+              <span className="rounded-full border border-[#d7c8b2] px-3 py-2">Design systems</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="articles" data-reveal className="px-5 py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 flex flex-col justify-between gap-6 border-b border-[#d7c8b2] pb-8 lg:flex-row lg:items-end">
@@ -316,12 +379,13 @@ export default function Home() {
             {articles.map((post) => (
               <article key={post.title} data-reveal className="article-card flex h-full min-w-[86vw] snap-center flex-col overflow-hidden rounded-[2rem] border border-[#d7c8b2] bg-[#fffaf0] shadow-sm md:min-w-0">
                 <div className="relative h-56 shrink-0 overflow-hidden">
-                  <img src={post.image} alt={`${post.tag} article preview for ${post.title}`} className="h-full w-full object-cover" />
+                  <img src={post.image} alt={post.alt} className="h-full w-full object-cover" />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <div className="mb-5 flex items-center justify-between gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[#b45309]"><span>{post.tag}</span><span className="shrink-0 text-[#8a7b68]">{post.readTime}</span></div>
+                  <div className="mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#b45309]"><span>{post.tag}</span><span>•</span><span>{post.date}</span><span>•</span><span className="text-[#8a7b68]">{post.readTime}</span></div>
                   <h3 className="break-words font-serif text-3xl font-semibold leading-tight tracking-[-0.04em]">{post.title}</h3>
                   <p className="mt-4 text-sm font-medium leading-7 text-[#675a4d]">{post.excerpt}</p>
+                  <div className="mt-5 text-sm font-bold text-[#211a14]">By {post.author}</div>
                   <a href="#subscribe" className="mt-auto inline-flex items-center gap-2 pt-7 text-sm font-bold text-[#211a14] hover:text-[#b45309]">Read article <ArrowRight size={15} /></a>
                 </div>
               </article>
@@ -386,8 +450,9 @@ export default function Home() {
           </div>
 
           <aside className="rounded-[2.2rem] border border-[#d7c8b2] bg-[#fffaf0] p-7 shadow-xl shadow-black/[0.04] lg:p-8">
-            <div className="mb-7 inline-flex items-center gap-2 rounded-full bg-[#f3efe6] px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#b45309]"><CalendarDays size={14} /> Column Notes</div>
-            <h2 className="font-serif text-4xl font-semibold leading-tight tracking-[-0.05em]">Small observations from the reading desk.</h2>
+            <div className="mb-7 inline-flex items-center gap-2 rounded-full bg-[#f3efe6] px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#b45309]"><CalendarDays size={14} /> From the Editor&apos;s Desk</div>
+            <h2 className="font-serif text-4xl font-semibold leading-tight tracking-[-0.05em]">Better reading starts with clearer thinking.</h2>
+            <p className="mt-4 text-sm font-medium leading-7 text-[#675a4d]">A few notes on what makes better reading, cleaner thinking, and useful digital habits.</p>
             <div className="mt-7 space-y-4">
               {notes.map((note) => (
                 <div key={note} className="flex gap-3 border-b border-[#e5d9c8] pb-4 last:border-b-0">
@@ -403,7 +468,7 @@ export default function Home() {
       <section id="subscribe" data-reveal className="px-5 py-20 lg:px-8 lg:py-24">
         <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[2.5rem] border border-[#211a14] bg-[#fffaf0] shadow-2xl shadow-black/[0.06] lg:grid-cols-[0.9fr_1.1fr]">
           <div className="relative min-h-[360px] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1200&q=90" alt="Laptop and notes for newsletter reading" className="absolute inset-0 h-full w-full object-cover" />
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1200&q=90" alt="Modern workspace for NoteView newsletter section" className="absolute inset-0 h-full w-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#211a14]/80 via-[#211a14]/15 to-transparent" />
             <div className="absolute bottom-8 left-8 right-8 text-[#fffaf0]">
               <p className="text-sm font-bold uppercase tracking-[0.28em] text-[#f2b66d]">Subscribe to NoteView</p>
