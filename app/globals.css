@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f7f3;
-  --foreground: #111111;
+  --background: #f3efe6;
+  --foreground: #211a14;
 }
 
 @theme inline {
@@ -31,13 +31,28 @@ body {
 
 body::before {
   content: "";
+  pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(circle at 18% 0%, rgba(37, 99, 235, 0.14), transparent 30%),
-    radial-gradient(circle at 90% 10%, rgba(17, 17, 17, 0.06), transparent 26%),
-    linear-gradient(180deg, #f8f7f3 0%, #f3f0e8 100%);
+    radial-gradient(circle at 10% 5%, rgba(180, 83, 9, 0.14), transparent 28%),
+    radial-gradient(circle at 88% 0%, rgba(33, 26, 20, 0.08), transparent 28%),
+    linear-gradient(180deg, #f3efe6 0%, #e9dfcf 100%);
+}
+
+body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.28;
+  background-image:
+    linear-gradient(rgba(33, 26, 20, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 26, 20, 0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
 }
 
 a {
@@ -54,14 +69,14 @@ input {
 }
 
 ::selection {
-  background: #2563eb;
-  color: white;
+  background: #b45309;
+  color: #fffaf0;
 }
 
 button:focus-visible,
 a:focus-visible,
 input:focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid #b45309;
   outline-offset: 4px;
 }
 
@@ -77,7 +92,7 @@ input:focus-visible {
   bottom: -0.45rem;
   height: 2px;
   border-radius: 999px;
-  background: #2563eb;
+  background: #b45309;
   transform: scaleX(0);
   transform-origin: center;
   transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -112,23 +127,33 @@ input:focus-visible {
   transform: translateY(0);
 }
 
-.editor-card:hover,
-.post-card:hover,
-.category-card:hover,
-.popular-row:hover {
-  transform: translateY(-8px);
-  border-color: rgba(37, 99, 235, 0.32);
-  box-shadow: 0 24px 80px rgba(17, 17, 17, 0.08);
-}
-
-.editor-card img {
+.story-cover img,
+.article-card img {
   transform: scale(1.001);
-  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1), filter 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.editor-card:hover img {
+.story-cover:hover img,
+.article-card:hover img {
   transform: scale(1.045);
-  filter: saturate(1.05) contrast(1.04);
+  filter: saturate(1.04) contrast(1.04);
+}
+
+.story-cover:hover,
+.article-card:hover,
+.topic-card:hover,
+.popular-row:hover,
+.story-link:hover {
+  transform: translateY(-7px);
+}
+
+.article-card:hover,
+.topic-card:hover,
+.popular-row:hover {
+  border-color: rgba(180, 83, 9, 0.42);
+  box-shadow: 0 24px 80px rgba(33, 26, 20, 0.08);
 }
 
 @media (max-width: 767px) {
@@ -142,13 +167,13 @@ input:focus-visible {
     gap: 0.6rem;
   }
 
-  #home + section.border-y span {
+  #home + section.border-y a {
     display: grid;
     min-height: 2.7rem;
     place-items: center;
-    border: 1px solid #e5e1d8;
+    border: 1px solid rgba(255, 250, 240, 0.14);
     border-radius: 999px;
-    background: white;
+    background: rgba(255, 250, 240, 0.07);
     padding: 0.72rem 0.55rem;
     text-align: center;
     font-size: 0.58rem;
