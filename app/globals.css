@@ -176,6 +176,10 @@ input:focus-visible {
   box-shadow: 0 24px 80px rgba(33, 26, 20, 0.08);
 }
 
+aside a[href="#articles"] {
+  margin-top: 2.5rem !important;
+}
+
 @media (max-width: 767px) {
   #home + section.border-y {
     padding-block: 1rem;
